@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+
+// 1. Obtener todos los posts de la colección "laboratorio"
+const allPosts = await getCollection("laboratorio");
+
+// 2. Ordenarlos por fecha, del más nuevo al más viejo
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>El Laboratorio | Mi Blog de Fotografía y Código</title>
+    </head>
+    <body>
+        <main style="max-width: 720px; margin: auto; padding: 2rem;">
+            <h1 style="font-size: 2.5rem;">El Laboratorio</h1>
+            <p>
+                Una bitácora sobre la intersección de la fotografía de
+                naturaleza y el desarrollo de software.
+            </p>
+
+            <ul>
+                {
+                    sortedPosts.map((post) => (
+                        <li style="margin-bottom: 1.5rem; list-style: none;">
+                            <a
+                                href={`/laboratorio/${post.slug}/`}
+                                style="text-decoration: none; color: inherit;"
+                            >
+                                <h2 style="margin-bottom: 0.5rem; color: #1e40af;">
+                                    {post.data.title}
+                                </h2>
+                            </a>
+                            <p style="margin-top: 0;">
+                                {post.data.description}
+                            </p>
+                            <small>
+                                Publicado el:{" "}
+                                {post.data.pubDate.toLocaleString("es-ES", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
+                            </small>
+                        </li>
+                    ))
+                }
+            </ul>
+        </main>
+    </body>
+</html>
