@@ -1,56 +1,84 @@
 ---
 import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
 
-// 1. Obtener todos los posts de la colección "laboratorio"
 const allPosts = await getCollection("laboratorio");
-
-// 2. Ordenarlos por fecha, del más nuevo al más viejo
 const sortedPosts = allPosts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>El Laboratorio | Mi Blog de Fotografía y Código</title>
-    </head>
-    <body>
-        <main style="max-width: 720px; margin: auto; padding: 2rem;">
-            <h1 style="font-size: 2.5rem;">El Laboratorio</h1>
-            <p>
-                Una bitácora sobre la intersección de la fotografía de
-                naturaleza y el desarrollo de software.
+<Layout
+    title="El Laboratorio"
+    description="Una bitácora sobre la intersección de la fotografía de naturaleza y el desarrollo de software"
+>
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold mb-4">El Laboratorio</h1>
+            <p class="text-xl text-zinc-600">
+                Documentando el viaje donde la tecnología potencia la fotografía
+                de naturaleza
             </p>
+        </header>
 
-            <ul>
-                {
-                    sortedPosts.map((post) => (
-                        <li style="margin-bottom: 1.5rem; list-style: none;">
+        <div class="flex flex-col gap-8">
+            {
+                sortedPosts.map((post) => {
+                    const formattedDate = post.data.pubDate.toLocaleString(
+                        "es-ES",
+                        {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        },
+                    );
+
+                    return (
+                        <article class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row">
                             <a
-                                href={`/laboratorio/${post.slug}/`}
-                                style="text-decoration: none; color: inherit;"
+                                href={`/laboratorio/${post.slug}`}
+                                class="block md:w-1/3 hover:opacity-90 transition-opacity bg-zinc-100"
                             >
-                                <h2 style="margin-bottom: 0.5rem; color: #1e40af;">
-                                    {post.data.title}
-                                </h2>
+                                {post.data.image && (
+                                    <div class="aspect-[3/4] overflow-hidden">
+                                        <img
+                                            src={post.data.image.url}
+                                            alt={post.data.image.alt}
+                                            class="w-full h-full object-contain"
+                                        />
+                                    </div>
+                                )}
                             </a>
-                            <p style="margin-top: 0;">
-                                {post.data.description}
-                            </p>
-                            <small>
-                                Publicado el:{" "}
-                                {post.data.pubDate.toLocaleString("es-ES", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                })}
-                            </small>
-                        </li>
-                    ))
-                }
-            </ul>
-        </main>
-    </body>
-</html>
+                            <div class="p-6 md:w-2/3 flex flex-col">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    {post.data.tags?.map((tag) => (
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                                <h2 class="text-2xl font-bold mb-2">
+                                    <a
+                                        href={`/laboratorio/${post.slug}`}
+                                        class="hover:text-blue-600"
+                                    >
+                                        {post.data.title}
+                                    </a>
+                                </h2>
+                                <p class="text-zinc-600 text-sm mb-4">
+                                    {formattedDate}
+                                    {post.data.author && (
+                                        <span> · Por {post.data.author}</span>
+                                    )}
+                                </p>
+                                <p class="text-zinc-700 line-clamp-2">
+                                    {post.data.description}
+                                </p>
+                            </div>
+                        </article>
+                    );
+                })
+            }
+        </div>
+    </div>
+</Layout>
