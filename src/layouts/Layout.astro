@@ -1,0 +1,33 @@
+---
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = "Fotografía de Naturaleza a través de un Lente Tecnológico",
+} = Astro.props;
+---
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>{title} | Felipe Asenjo</title>
+        <meta name="description" content={description} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    </head>
+    <body class="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col">
+        <Navigation />
+
+        <main class="flex-grow">
+            <slot />
+        </main>
+
+        <Footer />
+    </body>
+</html>

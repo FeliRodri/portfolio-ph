@@ -1,0 +1,35 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+            <a href="/" class="flex items-center">
+                <span class="font-bold text-xl">Felipe Asenjo</span>
+            </a>
+            <div class="flex space-x-8">
+                <a
+                    href="/laboratorio"
+                    class={`flex items-center px-3 py-2 text-sm font-medium ${
+                        currentPath.startsWith("/laboratorio")
+                            ? "text-blue-600"
+                            : "text-zinc-600 hover:text-zinc-900"
+                    }`}
+                >
+                    Laboratorio
+                </a>
+                <a
+                    href="/galeria"
+                    class={`flex items-center px-3 py-2 text-sm font-medium ${
+                        currentPath.startsWith("/galeria")
+                            ? "text-blue-600"
+                            : "text-zinc-600 hover:text-zinc-900"
+                    }`}
+                >
+                    Galería
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

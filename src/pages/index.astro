@@ -1,52 +1,55 @@
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Felipe Asenjo | Fotografía y Código</title>
-	</head>
-	<body
-		style="font-family: sans-serif; background-color: #f4f4f5; color: #18181b;"
-	>
-		<main
-			style="max-width: 800px; margin: auto; padding: 2rem; text-align: center;"
-		>
-			<header style="margin-bottom: 4rem;">
-				<h1 style="font-size: 3rem; margin-bottom: 0.5rem;">
-					Felipe Asenjo
-				</h1>
-				<p style="font-size: 1.25rem; color: #52525b;">
-					Fotografía de Naturaleza a través de un Lente Tecnológico
-				</p>
-			</header>
+---
+import Layout from "../layouts/Layout.astro";
+---
 
-			<section style="margin-bottom: 4rem;">
-				<h2 style="font-size: 1.75rem;">
-					Bienvenido a mi espacio digital
-				</h2>
-				<p style="line-height: 1.6;">
-					Aquí combino mis dos grandes pasiones: capturar la belleza
-					de la vida salvaje y construir soluciones con código. Este
-					portafolio no es solo una galería, es un proyecto vivo donde
-					la tecnología potencia el arte de la fotografía.
-				</p>
-			</section>
+<Layout
+	title="Inicio"
+	description="Fotografía de Naturaleza a través de un Lente Tecnológico - Portfolio de Felipe Asenjo"
+>
+	<div class="max-w-4xl mx-auto px-4 py-12 text-center">
+		<header class="mb-16">
+			<h1 class="text-5xl font-bold mb-2">Felipe Asenjo</h1>
+			<p class="text-xl text-zinc-600">
+				Fotografía de Naturaleza a través de un Lente Tecnológico
+			</p>
+		</header>
 
-			<section
-				style="background-color: #ffffff; padding: 2rem; border-radius: 8px;"
+		<section class="mb-16">
+			<h2 class="text-3xl font-semibold mb-4">
+				Bienvenido a mi espacio digital
+			</h2>
+			<p class="text-lg text-zinc-700 leading-relaxed max-w-2xl mx-auto">
+				Aquí combino mis dos grandes pasiones: capturar la belleza de la
+				vida salvaje y construir soluciones con código. Este portafolio
+				no es solo una galería, es un proyecto vivo donde la tecnología
+				potencia el arte de la fotografía.
+			</p>
+		</section>
+
+		<section class="bg-white shadow-lg rounded-xl p-8">
+			<h3 class="text-2xl font-semibold mb-4">Explora mi Bitácora</h3>
+			<p class="text-zinc-600 mb-8 max-w-2xl mx-auto">
+				En "El Laboratorio", documento mis procesos, experimentos y
+				hallazgos. Descubre cómo utilizo scripts para procesar imágenes,
+				analizo datos de mis fotografías y mucho más.
+			</p>
+			<a
+				href="/laboratorio/"
+				class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
 			>
-				<h3 style="font-size: 1.5rem;">Explora mi Bitácora</h3>
-				<p style="margin-bottom: 2rem;">
-					En "El Laboratorio", documento mis procesos, experimentos y
-					hallazgos. Descubre cómo utilizo scripts para procesar
-					imágenes, analizo datos de mis fotografías y mucho más.
-				</p>
-				<a
-					href="/laboratorio/"
-					style="display: inline-block; background-color: #1e40af; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold;"
+				Visitar El Laboratorio
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5 ml-2"
+					viewBox="0 0 20 20"
+					fill="currentColor"
 				>
-					Visitar El Laboratorio &rarr;
-				</a>
-			</section>
-		</main>
-	</body>
-</html>
+					<path
+						fill-rule="evenodd"
+						d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+						clip-rule="evenodd"></path>
+				</svg>
+			</a>
+		</section>
+	</div>
+</Layout>
