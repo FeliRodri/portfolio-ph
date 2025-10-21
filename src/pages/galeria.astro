@@ -1,0 +1,193 @@
+---
+import fs from "fs";
+import path from "path";
+import Layout from "../layouts/Layout.astro";
+
+// Leer archivos directamente desde public/images en tiempo de compilación
+const publicImagesDir = path.resolve("./public/images");
+/** @type {{src:string,alt:string,title:string}[]} */
+const images = /** @type {{src:string,alt:string,title:string}[]} */ (
+    () => {
+        try {
+            const files = fs.readdirSync(publicImagesDir);
+            return files
+                .filter((f) => /\.(jpe?g|png|webp|svg)$/i.test(f))
+                .map((file) => ({
+                    src: `/images/${file}`,
+                    alt: file.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
+                    title: file.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
+                }));
+        } catch (err) {
+            // Si la carpeta no existe o hubo un error, devolvemos array vacío
+            return [];
+        }
+    }
+)();
+---
+
+<Layout title="Galería" description="Galería de fotografías de vida salvaje">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold mb-2">Galería</h1>
+            <p class="text-zinc-600">
+                Fotografías de vida salvaje y naturaleza
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {
+                // @ts-ignore - images is populated at build time
+                images.map((img, idx) => (
+                    <figure class="bg-white rounded-lg overflow-hidden shadow">
+                        <button
+                            type="button"
+                            class="w-full text-left"
+                            data-index={idx}
+                            aria-label={`Abrir ${img.title}`}
+                        >
+                            <div class="aspect-[3/4] bg-zinc-100 overflow-hidden">
+                                <img
+                                    src={img.src}
+                                    alt={img.alt}
+                                    class="w-full h-full object-contain"
+                                />
+                            </div>
+                        </button>
+                        <figcaption class="p-3 text-sm text-zinc-600">
+                            {img.title}
+                        </figcaption>
+                    </figure>
+                ))
+            }
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div
+            id="lightbox"
+            class="fixed inset-0 z-50 hidden bg-black/90 p-4 sm:p-6 md:p-8"
+        >
+            <div
+                class="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center"
+            >
+                <button
+                    id="lb-close"
+                    aria-label="Cerrar"
+                    class="fixed top-4 right-4 z-10 text-white bg-black/40 rounded-full p-2 hover:bg-black/60 transition-colors"
+                    >✕</button
+                >
+                <button
+                    id="lb-prev"
+                    aria-label="Anterior"
+                    class="fixed left-4 top-1/2 -translate-y-1/2 z-10 text-white bg-black/40 rounded-full p-2 hover:bg-black/60 transition-colors"
+                    >◀</button
+                >
+                <div
+                    id="lb-content"
+                    class="w-full h-full flex items-center justify-center"
+                >
+                    <img
+                        id="lb-image"
+                        src=""
+                        alt=""
+                        class="max-h-full max-w-full object-contain rounded shadow-2xl"
+                    />
+                </div>
+                <button
+                    id="lb-next"
+                    aria-label="Siguiente"
+                    class="fixed right-4 top-1/2 -translate-y-1/2 z-10 text-white bg-black/40 rounded-full p-2 hover:bg-black/60 transition-colors"
+                    >▶</button
+                >
+            </div>
+        </div>
+
+        <!-- Server-side JSON for the client script (stored in a data- attribute)
+             This avoids interpolation/TDZ issues when embedding large literals
+             directly inside a <script> tag. -->
+        <div id="gallery-data" data-images={JSON.stringify(images)} hidden>
+        </div>
+
+        <script type="module">
+            // Read the serialized images array from the data attribute and parse it.
+            const dataEl = document.getElementById("gallery-data");
+            const images =
+                /** @type {{src:string,alt:string,title:string}[]} */ (
+                    dataEl && dataEl.dataset && dataEl.dataset.images
+                        ? JSON.parse(dataEl.dataset.images)
+                        : []
+                );
+
+            const lightbox = document.getElementById("lightbox");
+            const lbImage = document.getElementById("lb-image");
+            const lbClose = document.getElementById("lb-close");
+            const lbPrev = document.getElementById("lb-prev");
+            const lbNext = document.getElementById("lb-next");
+
+            if (!lightbox || !lbImage) {
+                // If essential elements are missing, stop silently and log for debugging
+                console.warn("Lightbox: missing DOM nodes", {
+                    lightbox,
+                    lbImage,
+                });
+            } else {
+                let current = 0;
+
+                function openLightbox(index) {
+                    current = index;
+                    const img = images[current];
+                    if (!img) return;
+                    lbImage.src = img.src;
+                    lbImage.alt = img.alt || img.title || "";
+                    lightbox.classList.remove("hidden");
+                    document.body.style.overflow = "hidden";
+                }
+
+                function closeLightbox() {
+                    lightbox.classList.add("hidden");
+                    lbImage.src = "";
+                    document.body.style.overflow = "";
+                }
+
+                function prev() {
+                    current = (current - 1 + images.length) % images.length;
+                    openLightbox(current);
+                }
+
+                function next() {
+                    current = (current + 1) % images.length;
+                    openLightbox(current);
+                }
+
+                // Use event delegation for buttons
+                document.addEventListener("click", (e) => {
+                    const btn = /** @type {HTMLElement|null} */ (
+                        e.target instanceof Element
+                            ? e.target.closest("button[data-index]")
+                            : null
+                    );
+                    if (btn) {
+                        const idx = Number(btn.getAttribute("data-index"));
+                        if (!Number.isNaN(idx)) openLightbox(idx);
+                    }
+                });
+
+                if (lbClose) lbClose.addEventListener("click", closeLightbox);
+                if (lbPrev) lbPrev.addEventListener("click", prev);
+                if (lbNext) lbNext.addEventListener("click", next);
+
+                // keyboard support
+                window.addEventListener("keydown", (e) => {
+                    if (lightbox.classList.contains("hidden")) return;
+                    if (e.key === "Escape") closeLightbox();
+                    if (e.key === "ArrowLeft") prev();
+                    if (e.key === "ArrowRight") next();
+                });
+
+                // click outside image to close
+                lightbox.addEventListener("click", (e) => {
+                    if (e.target === lightbox) closeLightbox();
+                });
+            }
+        </script>
+    </div>
+</Layout>
