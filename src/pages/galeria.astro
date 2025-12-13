@@ -1,28 +1,28 @@
 ---
-import fs from "fs";
-import path from "path";
 import Layout from "../layouts/Layout.astro";
 
-// Leer archivos directamente desde public/images en tiempo de compilación
-const publicImagesDir = path.resolve("./public/images");
-/** @type {{src:string,alt:string,title:string}[]} */
-const images = /** @type {{src:string,alt:string,title:string}[]} */ (
-    () => {
-        try {
-            const files = fs.readdirSync(publicImagesDir);
-            return files
-                .filter((f) => /\.(jpe?g|png|webp|svg)$/i.test(f))
-                .map((file) => ({
-                    src: `/images/${file}`,
-                    alt: file.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
-                    title: file.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
-                }));
-        } catch (err) {
-            // Si la carpeta no existe o hubo un error, devolvemos array vacío
-            return [];
-        }
-    }
-)();
+// Importar imágenes desde src/assets usando import.meta.glob
+// Nota: Asegúrate de mover tus imágenes de public/images a src/assets
+const imagesGlob = import.meta.glob(
+    "../assets/images/*.{jpeg,jpg,png,gif,webp,svg}",
+    {
+        eager: true,
+    },
+);
+
+const images = Object.entries(imagesGlob).map(([filepath, module]) => {
+    // @ts-ignore
+    const image = module.default;
+    // Extraer nombre del archivo para usar como título
+    const filename = (filepath.split("/").pop() ?? "").replace(/\.[^/.]+$/, "");
+    const cleanName = filename.replace(/[-_]/g, " ");
+
+    return {
+        src: image.src,
+        alt: cleanName,
+        title: cleanName,
+    };
+});
 ---
 
 <Layout title="Galería" description="Galería de fotografías de vida salvaje">

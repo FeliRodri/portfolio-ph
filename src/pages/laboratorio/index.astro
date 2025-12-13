@@ -42,7 +42,7 @@ const sortedPosts = allPosts.sort(
                                 {post.data.image && (
                                     <div class="aspect-[3/4] overflow-hidden">
                                         <img
-                                            src={post.data.image.url}
+                                            src={post.data.image.url.src}
                                             alt={post.data.image.alt}
                                             class="w-full h-full object-contain"
                                         />

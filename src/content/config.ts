@@ -1,23 +1,18 @@
-// 1. Importar utilidades de `astro:content`
-import { z, defineCollection } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
-// 2. Definir una `type` y `schema` para cada colección
-const laboratorioCollection = defineCollection({
-    type: 'content', // or 'data'
-    schema: z.object({
-        title: z.string(),
-        pubDate: z.date(),
-        description: z.string(),
-        author: z.string(),
-        image: z.object({
-            url: z.string(),
-            alt: z.string()
+const laboratorio = defineCollection({
+    schema: ({ image }) =>
+        z.object({
+            title: z.string(),
+            pubDate: z.date(),
+            description: z.string(),
+            author: z.string(),
+            image: z.object({
+                url: image(), // Esto transforma la ruta string en una imagen importada
+                alt: z.string(),
+            }),
+            tags: z.array(z.string()),
         }),
-        tags: z.array(z.string())
-    }),
 });
 
-// 3. Exportar un único objeto `collections` para registrar tu(s) colección(es)
-export const collections = {
-    'laboratorio': laboratorioCollection,
-};
+export const collections = { laboratorio };

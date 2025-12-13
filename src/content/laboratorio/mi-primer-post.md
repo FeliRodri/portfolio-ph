@@ -4,7 +4,7 @@ pubDate: 2025-10-15
 description: "Este es el comienzo de un nuevo viaje, documentando cómo la tecnología puede potenciar la fotografía de vida salvaje."
 author: "Felipe Asenjo"
 image:
-    url: "/images/carpinterito.webp"
+    url: "../../assets/images/carpinterito.webp"
     alt: "Un ave llamada coloquialmente carpinterito posando en un arbol antiguo"
 tags: ["astro", "blogging", "fotografía"]
 ---
