@@ -1,19 +1,30 @@
 ---
+import { getImage } from "astro:assets";
+import heroImage from "../assets/images/chercan.webp";
 import Layout from "../layouts/Layout.astro";
+
+const heroBg = await getImage({ src: heroImage, format: "webp" });
 ---
 
 <Layout
 	title="Inicio"
 	description="Fotografía de Naturaleza a través de un Lente Tecnológico - Portfolio de Felipe Asenjo"
 >
-	<div class="max-w-4xl mx-auto px-4 py-12 text-center">
-		<header class="mb-16">
+	<!-- Sección Hero (Portada) -->
+	<div
+		class="relative h-[60vh] w-full flex items-center justify-center overflow-hidden bg-fixed bg-bottom bg-cover bg-no-repeat"
+		style={`background-image: url(${heroBg.src});`}
+	>
+		<div class="absolute inset-0 bg-black/50 z-0"></div>
+		<div class="relative z-10 text-center text-white px-4">
 			<h1 class="text-5xl font-bold mb-2">Felipe Asenjo</h1>
-			<p class="text-xl text-zinc-600">
+			<p class="text-xl text-zinc-100">
 				Fotografía de Naturaleza a través de un Lente Tecnológico
 			</p>
-		</header>
+		</div>
+	</div>
 
+	<div class="max-w-4xl mx-auto px-4 py-12 text-center">
 		<section class="mb-16">
 			<h2 class="text-3xl font-semibold mb-4">
 				Bienvenido a mi espacio digital
