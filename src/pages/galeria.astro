@@ -34,26 +34,27 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
             </p>
         </header>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="columns-1 sm:columns-2 lg:columns-[320px] gap-6 space-y-6">
             {
                 // @ts-ignore - images is populated at build time
                 images.map((img, idx) => (
-                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow">
+                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow break-inside-avoid">
                         <button
                             type="button"
-                            class="w-full text-left"
+                            class="w-full text-left group"
                             data-index={idx}
                             aria-label={`Abrir ${img.title}`}
                         >
-                            <div class="aspect-[3/4] bg-zinc-100 dark:bg-zinc-700 overflow-hidden">
+                            <div class="relative bg-zinc-100 dark:bg-zinc-700 overflow-hidden">
                                 <img
                                     src={img.src}
                                     alt={img.alt}
-                                    class="w-full h-full object-contain"
+                                    class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                                    loading="lazy"
                                 />
                             </div>
                         </button>
-                        <figcaption class="p-3 text-sm text-zinc-600 dark:text-zinc-400">
+                        <figcaption class="p-3 text-sm font-medium text-zinc-600 dark:text-zinc-400">
                             {img.title}
                         </figcaption>
                     </figure>
