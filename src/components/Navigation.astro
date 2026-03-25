@@ -2,7 +2,7 @@
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="bg-white shadow">
+<nav class="bg-white dark:bg-zinc-800 shadow">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between h-16">
             <a href="/" class="flex items-center">
@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
                     class={`flex items-center px-3 py-2 text-sm font-medium ${
                         currentPath.startsWith("/laboratorio")
                             ? "text-blue-600"
-                            : "text-zinc-600 hover:text-zinc-900"
+                            : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
                     }`}
                 >
                     Laboratorio
@@ -24,7 +24,7 @@ const currentPath = Astro.url.pathname;
                     class={`flex items-center px-3 py-2 text-sm font-medium ${
                         currentPath.startsWith("/galeria")
                             ? "text-blue-600"
-                            : "text-zinc-600 hover:text-zinc-900"
+                            : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
                     }`}
                 >
                     Galería
