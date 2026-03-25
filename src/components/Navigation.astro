@@ -1,34 +1,40 @@
 ---
 const currentPath = Astro.url.pathname;
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
-<nav class="bg-white dark:bg-zinc-800 shadow">
+<nav class="bg-white dark:bg-zinc-800 shadow relative z-50">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between h-16">
             <a href="/" class="flex items-center">
                 <span class="font-bold text-xl">Felipe Asenjo</span>
             </a>
-            <div class="flex space-x-8">
-                <a
-                    href="/laboratorio"
-                    class={`flex items-center px-3 py-2 text-sm font-medium ${
-                        currentPath.startsWith("/laboratorio")
-                            ? "text-blue-600"
-                            : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
-                    }`}
-                >
-                    Laboratorio
-                </a>
-                <a
-                    href="/galeria"
-                    class={`flex items-center px-3 py-2 text-sm font-medium ${
-                        currentPath.startsWith("/galeria")
-                            ? "text-blue-600"
-                            : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
-                    }`}
-                >
-                    Galería
-                </a>
+            <div class="flex items-center space-x-4 sm:space-x-8">
+                <div class="flex space-x-4 sm:space-x-8">
+                    <a
+                        href="/laboratorio"
+                        class={`flex items-center px-1 sm:px-3 py-2 text-sm font-medium ${
+                            currentPath.startsWith("/laboratorio")
+                                ? "text-blue-600"
+                                : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
+                        }`}
+                    >
+                        Laboratorio
+                    </a>
+                    <a
+                        href="/galeria"
+                        class={`flex items-center px-1 sm:px-3 py-2 text-sm font-medium ${
+                            currentPath.startsWith("/galeria")
+                                ? "text-blue-600"
+                                : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
+                        }`}
+                    >
+                        Galería
+                    </a>
+                </div>
+                <div class="h-6 w-px bg-zinc-200 dark:bg-zinc-700"></div>
+                <!-- theme tools icon modal trigger -->
+                <ThemeToggle />
             </div>
         </div>
     </div>
