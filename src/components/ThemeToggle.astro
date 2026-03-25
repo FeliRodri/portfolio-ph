@@ -4,8 +4,8 @@
 <button
   id="theme-toggle"
   class="flex items-center justify-center p-2 rounded-md text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
-  aria-label="Configuración de tema"
-  title="Ajustes de tema"
+  aria-label="Configuración"
+  title="Ajustes y preferencias"
 >
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
@@ -23,11 +23,11 @@
 
 <dialog
   id="theme-modal"
-  class="fixed inset-0 m-auto p-6 rounded-xl shadow-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 backdrop:bg-zinc-900/50 backdrop:backdrop-blur-sm dark:backdrop:bg-black/50 overflow-hidden w-full max-w-sm"
+  class="fixed inset-0 m-auto p-6 rounded-xl shadow-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 backdrop:bg-zinc-900/50 backdrop:backdrop-blur-sm dark:backdrop:bg-black/50 overflow-hidden w-full max-w-sm sm:max-w-md"
 >
-  <div class="flex flex-col space-y-4">
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Tema del sitio</h3>
+  <div class="flex flex-col space-y-6">
+    <div class="flex justify-between items-center mb-1">
+      <h3 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">Ajustes</h3>
       <button 
         id="close-theme-modal" 
         class="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
@@ -37,22 +37,39 @@
       </button>
     </div>
     
-    <div class="grid grid-cols-2 gap-3">
-      <button
-        id="theme-light-btn"
-        class="flex flex-col items-center justify-center space-y-2 p-4 rounded-lg border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 hover:border-blue-500 dark:hover:border-blue-500 transition-colors group"
-      >
-        <svg class="w-6 h-6 text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-        <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Claro</span>
-      </button>
-      
-      <button
-        id="theme-dark-btn"
-        class="flex flex-col items-center justify-center space-y-2 p-4 rounded-lg border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 hover:border-blue-500 dark:hover:border-blue-500 transition-colors group"
-      >
-        <svg class="w-6 h-6 text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-        <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Oscuro</span>
-      </button>
+    <!-- Sección de Tema -->
+    <div class="space-y-3">
+        <h4 class="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Apariencia</h4>
+        <div class="grid grid-cols-2 gap-3">
+          <button
+            id="theme-light-btn"
+            class="flex flex-col items-center justify-center space-y-2 p-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 hover:border-blue-500 dark:hover:border-blue-500 transition-colors group"
+          >
+            <svg class="w-5 h-5 text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Claro</span>
+          </button>
+          
+          <button
+            id="theme-dark-btn"
+            class="flex flex-col items-center justify-center space-y-2 p-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 hover:border-blue-500 dark:hover:border-blue-500 transition-colors group"
+          >
+            <svg class="w-5 h-5 text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Oscuro</span>
+          </button>
+        </div>
+    </div>
+
+    <!-- Sección de Idioma -->
+    <div class="space-y-3">
+        <h4 class="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Idioma</h4>
+        <div class="grid grid-cols-2 gap-2">
+            <button class="lang-btn text-left px-3 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition text-sm font-medium" data-lang="es">🇪🇸 Español (Original)</button>
+            <button class="lang-btn text-left px-3 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition text-sm font-medium" data-lang="en">🇬🇧 Inglés</button>
+            <button class="lang-btn text-left px-3 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition text-sm font-medium" data-lang="fr">🇫🇷 Francés</button>
+            <button class="lang-btn text-left px-3 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition text-sm font-medium" data-lang="ru">🇷🇺 Ruso</button>
+            <button class="lang-btn text-left px-3 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition text-sm font-medium" data-lang="zh-CN">🇨🇳 Chino</button>
+        </div>
+        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-2">* Traducción automática por Google</p>
     </div>
   </div>
 </dialog>
@@ -63,6 +80,7 @@
   const closeThemeModal = document.getElementById('close-theme-modal');
   const themeLightBtn = document.getElementById('theme-light-btn');
   const themeDarkBtn = document.getElementById('theme-dark-btn');
+  const langButtons = document.querySelectorAll('.lang-btn');
   
   const getTheme = () => {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -83,10 +101,31 @@
     localStorage.setItem('theme', theme);
   };
 
+  const currentLang = () => {
+      const match = document.cookie.match(/(?:^|;)\s*googtrans=([^;]*)/);
+      if (match) {
+          const val = decodeURIComponent(match[1]);
+          const parts = val.split('/');
+          if (parts.length > 2 && parts[2] !== 'es') return parts[2];
+      }
+      return 'es'; // default
+  };
+
   const updateButtonsState = () => {
     const currentTheme = getTheme();
     themeLightBtn.classList.toggle('border-blue-500', currentTheme === 'light');
     themeDarkBtn.classList.toggle('border-blue-500', currentTheme === 'dark');
+
+    const activeLang = currentLang();
+    langButtons.forEach(btn => {
+        if (btn.dataset.lang === activeLang) {
+            btn.classList.add('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-700', 'dark:text-blue-300');
+            btn.classList.remove('border-zinc-200', 'dark:border-zinc-700');
+        } else {
+            btn.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-700', 'dark:text-blue-300');
+            btn.classList.add('border-zinc-200', 'dark:border-zinc-700');
+        }
+    });
   };
 
   themeToggle.addEventListener('click', () => {
@@ -113,19 +152,55 @@
   themeLightBtn.addEventListener('click', () => {
     setTheme('light');
     updateButtonsState();
-    setTimeout(() => themeModal.close(), 150);
   });
 
   themeDarkBtn.addEventListener('click', () => {
     setTheme('dark');
     updateButtonsState();
-    setTimeout(() => themeModal.close(), 150);
+  });
+
+  langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          // Set cookie for automatic translation reloading
+          document.cookie = `googtrans=/es/${lang}; path=/; domain=${window.location.hostname}`;
+          document.cookie = `googtrans=/es/${lang}; path=/`;
+          window.location.reload();
+      });
   });
 </script>
 
-<style>
+<style is:global>
   dialog::backdrop {
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
+  }
+  
+  /* Hide Google Translate ugly iframe and tooltips completely */
+  html, body {
+    top: 0 !important;
+    position: static !important;
+  }
+  
+  iframe.goog-te-banner-frame,
+  .goog-te-banner-frame,
+  .goog-te-banner-frame.skiptranslate,
+  .skiptranslate.goog-te-gadget {
+      display: none !important;
+      visibility: hidden !important;
+  }
+  
+  .goog-text-highlight {
+      background-color: transparent !important;
+      box-shadow: none !important;
+  }
+  
+  #goog-gt-tt,
+  .goog-tooltip,
+  .VIpgJd-ZVi9od-ORHb-OEVmcd,
+  .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+  #google_translate_element {
+      display: none !important;
+      visibility: hidden !important;
   }
 </style>
