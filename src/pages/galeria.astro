@@ -1,8 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
 // Importar imágenes desde src/assets usando import.meta.glob
-// Nota: Asegúrate de mover tus imágenes de public/images a src/assets
 const imagesGlob = import.meta.glob(
     "../assets/images/*.{jpeg,jpg,png,gif,webp,svg}",
     {
@@ -13,12 +13,12 @@ const imagesGlob = import.meta.glob(
 const images = Object.entries(imagesGlob).map(([filepath, module]) => {
     // @ts-ignore
     const image = module.default;
-    // Extraer nombre del archivo para usar como título
     const filename = (filepath.split("/").pop() ?? "").replace(/\.[^/.]+$/, "");
     const cleanName = filename.replace(/[-_]/g, " ");
 
     return {
         src: image.src,
+        rawImage: image,   // Keep the original for <Image> component
         alt: cleanName,
         title: cleanName,
     };
@@ -38,19 +38,23 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
             {
                 // @ts-ignore - images is populated at build time
                 images.map((img, idx) => (
-                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow break-inside-avoid">
+                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow break-inside-avoid gallery-item">
                         <button
                             type="button"
                             class="w-full text-left group"
                             data-index={idx}
                             aria-label={`Abrir ${img.title}`}
                         >
-                            <div class="relative bg-zinc-100 dark:bg-zinc-700 overflow-hidden">
-                                <img
-                                    src={img.src}
+                            <div class="relative bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+                                <Image
+                                    src={img.rawImage}
                                     alt={img.alt}
-                                    class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                                    widths={[320, 640, 960]}
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                                    class="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105 opacity-0"
                                     loading="lazy"
+                                    decoding="async"
+                                    onload="this.style.opacity=1"
                                 />
                             </div>
                         </button>

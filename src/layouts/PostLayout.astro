@@ -62,18 +62,39 @@ const formattedDate = pubDate.toLocaleDateString("es-ES", {
     </article>
 </Layout>
 
-<style>
+<style is:global>
     .prose {
-        @apply prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-p:text-zinc-700 dark:prose-p:text-zinc-300 prose-a:text-blue-600 hover:prose-a:text-blue-800;
-        @apply prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-200 prose-pre:bg-zinc-900;
-        @apply prose-img:rounded-xl prose-hr:border-zinc-300 dark:prose-hr:border-zinc-700;
+        @apply prose-headings:text-zinc-900 prose-p:text-zinc-700 prose-a:text-blue-600 hover:prose-a:text-blue-800;
+        @apply prose-strong:text-zinc-900 prose-code:text-zinc-800 prose-pre:bg-zinc-900;
+        @apply prose-img:rounded-xl prose-hr:border-zinc-300;
     }
-    :global(.dark .prose) {
+    .dark .prose {
         --tw-prose-body: #d4d4d8;
         --tw-prose-headings: #f4f4f5;
         --tw-prose-links: #60a5fa;
         --tw-prose-bold: #f4f4f5;
         --tw-prose-code: #cbd5e1;
         --tw-prose-pre-bg: #18181b;
+    }
+    .dark .prose h1,
+    .dark .prose h2,
+    .dark .prose h3,
+    .dark .prose h4 {
+        color: #f4f4f5;
+    }
+    .dark .prose p {
+        color: #d4d4d8;
+    }
+    .dark .prose strong {
+        color: #f4f4f5;
+    }
+    .dark .prose a {
+        color: #60a5fa;
+    }
+    .dark .prose hr {
+        border-color: #3f3f46;
+    }
+    .dark .prose li {
+        color: #d4d4d8;
     }
 </style>

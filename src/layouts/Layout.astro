@@ -5,21 +5,50 @@ import Navigation from "../components/Navigation.astro";
 interface Props {
     title: string;
     description?: string;
+    ogImage?: string;
 }
 
 const {
     title,
     description = "Fotografía de Naturaleza a través de un Lente Tecnológico",
+    ogImage = "/favicon.svg",
 } = Astro.props;
+
+const fullTitle = `${title} | Felipe Asenjo`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://felipeasenjo.com');
 ---
 
 <html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <title>{title} | Felipe Asenjo</title>
+        <title>{fullTitle}</title>
         <meta name="description" content={description} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="canonical" href={canonicalURL.href} />
+
+        <!-- Google Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL.href} />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:locale" content="es_CL" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={fullTitle} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+
         <script is:inline>
             const theme = localStorage.getItem('theme');
             if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -28,18 +57,18 @@ const {
         </script>
         
         <!-- Google Translate Integration -->
-        <script type="text/javascript" is:inline>
-            function googleTranslateElementInit() {
+        <script is:inline>
+            window.googleTranslateElementInit = function() {
                 new google.translate.TranslateElement({
                     pageLanguage: 'es', 
                     includedLanguages: 'es,en,fr,ru,zh-CN',
                     autoDisplay: false
                 }, 'google_translate_element');
-            }
+            };
         </script>
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" is:inline></script>
+        <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" is:inline></script>
     </head>
-    <body class="min-h-screen bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 flex flex-col">
+    <body class="min-h-screen bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans">
         <!-- Hidden Google Translate Element -->
         <div id="google_translate_element" style="display:none;"></div>
         <Navigation />

@@ -4,6 +4,9 @@ module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       typography: {
         DEFAULT: {
           css: {
@@ -18,7 +21,7 @@ module.exports = {
               },
             },
             "h1, h2, h3, h4": {
-              color: "#18181b",
+              color: "inherit",
               fontWeight: "700",
               marginTop: "1.5em",
               marginBottom: "0.5em",
