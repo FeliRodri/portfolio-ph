@@ -18,11 +18,14 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
 
     return {
         src: image.src,
-        rawImage: image,   // Keep the original for <Image> component
+        rawImage: image, // Keep the original for <Image> component
         alt: cleanName,
         title: cleanName,
     };
 });
+
+// Create a lightweight version of the images array for the client-side lightbox
+const clientImages = images.map(({ src, alt, title }) => ({ src, alt, title }));
 ---
 
 <Layout title="Galería" description="Galería de fotografías de vida salvaje">
@@ -38,7 +41,7 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
             {
                 // @ts-ignore - images is populated at build time
                 images.map((img, idx) => (
-                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow break-inside-avoid gallery-item">
+                    <figure class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow break-inside-avoid">
                         <button
                             type="button"
                             class="w-full text-left group"
@@ -86,17 +89,14 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
                     class="fixed left-4 top-1/2 -translate-y-1/2 z-10 text-white bg-black/40 rounded-full p-2 hover:bg-black/60 transition-colors"
                     >◀</button
                 >
-                <div
-                    id="lb-content"
-                    class="w-full h-full flex items-center justify-center"
-                >
-                    <img
-                        id="lb-image"
-                        src=""
-                        alt=""
-                        class="max-h-full max-w-full object-contain rounded shadow-2xl"
-                    />
-                </div>
+
+                <img
+                    id="lb-image"
+                    src=""
+                    alt=""
+                    class="max-h-full max-w-full object-contain rounded shadow-2xl"
+                />
+
                 <button
                     id="lb-next"
                     aria-label="Siguiente"
@@ -109,7 +109,11 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
         <!-- Server-side JSON for the client script (stored in a data- attribute)
              This avoids interpolation/TDZ issues when embedding large literals
              directly inside a <script> tag. -->
-        <div id="gallery-data" data-images={JSON.stringify(images)} hidden>
+        <div
+            id="gallery-data"
+            data-images={JSON.stringify(clientImages)}
+            hidden
+        >
         </div>
 
         <script type="module">
@@ -190,7 +194,7 @@ const images = Object.entries(imagesGlob).map(([filepath, module]) => {
 
                 // click outside image to close
                 lightbox.addEventListener("click", (e) => {
-                    if (e.target === lightbox) closeLightbox();
+                    if (e.target === lightbox || e.target === lightbox.querySelector('.relative')) closeLightbox();
                 });
             }
         </script>
